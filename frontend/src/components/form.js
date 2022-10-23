@@ -90,28 +90,31 @@ export class Form {
 
     async processForm() {
 
-        if (this.page === 'signup') {
-            try {
-                const result = await CustomHttp.request(`${config.host}/signup`, 'POST', {
-                    name: this.fields.find(item => item.name === 'name').element.value,
-                    lastName: this.fields.find(item => item.name === 'lastName').element.value,
-                    email: this.fields.find(item => item.name === 'email').element.value,
-                    password: this.fields.find(item => item.name === 'password').element.value
-                })
-                if (result) {
-                    if (result.error || !result.user) {
-                        throw new Error(result.message)
+        const email = this.fields.find(item => item.name === 'email').element.value
+        const password = this.fields.find(item => item.name === 'password').element.value
+
+        if (this.validateForm()) {
+            if (this.page === 'signup') {
+                try {
+                    const result = await CustomHttp.request(`${config.host}/signup`, 'POST', {
+                        name: this.fields.find(item => item.name === 'name').element.value,
+                        lastName: this.fields.find(item => item.name === 'lastName').element.value,
+                        email: email,
+                        password: password
+                    })
+                    if (result) {
+                        if (result.error || !result.user) {
+                            throw new Error(result.message)
+                        }
                     }
-                    location.href = '#/choice'
+                } catch (error) {
+                    return console.log(error)
                 }
-            } catch (error) {
-                console.log(error)
             }
-        } else {
             try {
                 const result = await CustomHttp.request(`${config.host}/login`, "POST", {
-                    email: this.fields.find(item => item.name === 'email').element.value,
-                    password: this.fields.find(item => item.name === 'password').element.value
+                    email: email,
+                    password: password
                 })
                 if (result) {
                     if (result.error ||
@@ -122,6 +125,10 @@ export class Form {
                         throw new Error(result.message)
                     }
                     Auth.setTokens(result.accessToken, result.refreshToken)
+                    Auth.setUserInfo({
+                        fullName: result.fullName,
+                        userId: result.userId,
+                    })
                     location.href = '#/choice'
                 }
             } catch (error) {

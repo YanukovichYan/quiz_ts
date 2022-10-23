@@ -28,6 +28,29 @@ a {
     margin: 0 auto;
 }
 
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    margin-right: 5px;
+}
+
+.profile-user {
+    font-size: 18px;
+}
+
+.profile-logout {
+    font-size: 12px;
+}
+
 .button {
     padding: 14px 35px;
     left: 120px;
