@@ -1,11 +1,11 @@
-import {UrlManager} from "../utils/url-manager.js";
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
+import {Auth} from "../services/auth.js";
 
 export class Choice {
     constructor() {
         this.quizzes = [];
-        this.routeParams = UrlManager.getQueryParams()
+        this.testResults = null
 
         this.init()
     }
@@ -18,15 +18,31 @@ export class Choice {
                     throw new Error(result.error)
                 }
                 this.quizzes = result
-                this.processQuizzes()
             }
         } catch (e) {
-            console.log(e)
+            return console.log(e)
         }
+
+        const userInfo = Auth.getUserInfo()
+        if (userInfo) {
+            try {
+                const results = await CustomHttp.request(`${config.host}/tests/results?userId=${userInfo.userId}`, 'GET')
+                if (results) {
+                    if (results.error) {
+                        throw new Error(results.error)
+                    }
+                    this.testResults = results
+                }
+            } catch (e) {
+                return console.log(e)
+            }
+        }
+        this.processQuizzes()
     }
 
     processQuizzes() {
         const choiceOptionsElement = document.getElementById('choice-options')
+
         if (this.quizzes && this.quizzes.length > 0) {
             this.quizzes.forEach(quiz => {
                 const that = this
@@ -53,6 +69,27 @@ export class Choice {
                 choiceOptionElement.appendChild(choiceOptionTextElement)
                 choiceOptionElement.appendChild(choiceOptionArrowElement)
                 choiceOptionsElement.appendChild(choiceOptionElement)
+
+                if (this.testResults) {
+                    this.testResults.forEach(backResults => {
+                        if (backResults.testId === quiz.id) {
+                            const choiceOptionsResultTest = document.createElement('div')
+                            choiceOptionsResultTest.className = 'choice-options-result-test'
+
+                            const choiceOptionsResultTestText = document.createElement('div')
+                            choiceOptionsResultTestText.className = 'choice-options-result-test-text'
+                            choiceOptionsResultTestText.innerText = 'Результат'
+
+                            const choiceOptionsResultTestScore = document.createElement('div')
+                            choiceOptionsResultTestScore.className = 'choice-options-result-test-text'
+                            choiceOptionsResultTestScore.innerText = `${backResults.score}/${backResults.total}`
+
+                            choiceOptionsResultTest.appendChild(choiceOptionsResultTestText)
+                            choiceOptionsResultTest.appendChild(choiceOptionsResultTestScore)
+                            choiceOptionElement.appendChild(choiceOptionsResultTest)
+                        }
+                    })
+                }
             })
         }
     }
@@ -60,7 +97,7 @@ export class Choice {
     chooseQuiz(element) {
         const dataId = element.getAttribute('data-id')
         if (dataId) {
-            location.href = '#/test?name=' + this.routeParams.name + '&lastName=' + this.routeParams.lastName + '&email=' + this.routeParams.email + '&id=' + dataId
+            location.href = '#/test?id=' + dataId
         }
     }
 }

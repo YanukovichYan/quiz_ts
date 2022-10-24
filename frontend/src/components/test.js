@@ -1,4 +1,7 @@
 import {UrlManager} from "../utils/url-manager.js";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
+import {Auth} from "../services/auth.js";
 
 export class Test {
     constructor() {
@@ -12,23 +15,25 @@ export class Test {
         this.currentQuestionIndex = 1;
         this.userResult = [];
         this.user = {};
-
         this.routeParams = UrlManager.getQueryParams()
-        UrlManager.checkUserData(this.routeParams)
 
+        this.init()
+    }
+
+    async init() {
         if (this.routeParams.id) {
-            const xhr = new XMLHttpRequest()
-            xhr.open('GET', 'https://testologia.site/get-quiz?id=' + this.routeParams.id, false)
-            xhr.send()
-            if (xhr.status === 200 && xhr.responseText) {
-                try {
-                    this.quiz = JSON.parse(xhr.responseText)
-                } catch (e) {
-                    location.href = "#/"
+
+            try {
+                const result = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}`, 'GET')
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error)
+                    }
+                    this.quiz = result
+                    this.startQuiz()
                 }
-                this.startQuiz()
-            } else {
-                location.href = "#/"
+            } catch (e) {
+                console.log(e)
             }
         }
     }
@@ -59,11 +64,11 @@ export class Test {
 
         const timerElement = document.getElementById('timer')
         let seconds = 1000
-        const interval = setInterval(function () {
+        this.interval = setInterval(function () {
             seconds--
             timerElement.innerText = seconds
             if (seconds === 0) {
-                clearInterval(interval)
+                clearInterval(this.interval)
                 this.complete()
             }
         }.bind(this), 1000)
@@ -183,6 +188,7 @@ export class Test {
         }
 
         if (this.currentQuestionIndex > this.quiz.questions.length) {
+            clearInterval(this.interval)
             this.complete()
             return
         }
@@ -200,37 +206,24 @@ export class Test {
         this.showQuestion()
     }
 
-    complete() {
-        this.user = {
-            name: this.routeParams.name,
-            lastName: this.routeParams.lastName,
-            email: this.routeParams.email,
-        }
-        const xhr = new XMLHttpRequest()
-        xhr.open('POST', 'https://testologia.site/pass-quiz?id=' + this.routeParams.id, false)
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-        xhr.send(JSON.stringify({
-            name: this.routeParams.name,
-            lastName: this.routeParams.lastName,
-            email: this.routeParams.email,
-            results: this.userResult
-        }))
-        localStorage.setItem('user', JSON.stringify(this.user))
-        localStorage.setItem('chosenAnswers', JSON.stringify(this.userResult))
+    async complete() {
+        const userInfo = Auth.getUserInfo()
+        if (!userInfo) location.href = '#/'
 
+        try {
+            const result = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}/pass`, 'POST', {
+                userId: userInfo.userId,
+                results: this.userResult
+            })
 
-        if (xhr.status === 200 && xhr.responseText) {
-            let result = null
-            try {
-                result = JSON.parse(xhr.responseText)
-            } catch (e) {
-                location.href = "#/"
-            }
             if (result) {
-                location.href = '#/result?score=' + result.score + '&total=' + result.total + '&id=' + this.routeParams.id
+                if (result.error) {
+                    throw new Error(result.error)
+                }
+                location.href = '#/result?id=' + this.routeParams.id
             }
-        } else {
-            location.href = "#/"
+        } catch (e) {
+            console.log(e)
         }
     }
 }

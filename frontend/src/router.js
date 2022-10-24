@@ -8,7 +8,7 @@ export class Router {
     constructor() {
         this.contentElement = document.getElementById('content')
         this.stylesElement = document.getElementById('styles')
-        this.titleElement = document.getElementById('title')
+        this.titleElement = document.getElementById('page-title')
         this.profileElement = document.getElementById('profile')
         this.profileFullNameElement = document.getElementById('profile-full-name')
 
