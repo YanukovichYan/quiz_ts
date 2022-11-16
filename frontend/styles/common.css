@@ -35,7 +35,7 @@ a {
 }
 
 .profile {
-    display: flex;
+    display: none;
     align-items: center;
 }
 
@@ -130,7 +130,6 @@ a.button {
     top: 10px;
 }
 
-
 .big-title {
     font-family: MuseoSansCyrl700, sans-serif;
     font-size: 54px;
@@ -146,20 +145,23 @@ a.button {
     margin-top: 80px;
 }
 
-.results-test a {
+.rightsAnswers {
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
     font-size: 17px;
     line-height: 20px;
     color: #6933DC;
-    text-decoration: none;
     display: flex;
     align-items: center;
 }
 
-.results-test a:hover {
+.rightsAnswers:hover {
     text-decoration: underline;
 }
 
-.results-test a img {
+.results-test img {
     margin-left: 13px;
 }
 
