@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b193fa7b-bbae-4ed4-85d3-c08cb4f67ae8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/refresh-response.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Проект Quiz на TS.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/auth.controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/test.controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/data/test-results.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/data/tests.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/data/users.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/test-result.model.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/test.model.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/user.model.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/auth.routes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/test.routes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/middleware.utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/token.utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/validation.utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/config/config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/choice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/form.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/result.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/right-answers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/auth.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/custom-http.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/route.type.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/utils/url-manager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/fonts/MuseoSansCyrl-500.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/fonts/MuseoSansCyrl-700.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/Main-image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/Time.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/choice-image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/form-image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/profile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/question-marks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/result.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/right-answers-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/images/test-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/choice.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/common.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/form.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/result.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/right-answers.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/styles/test.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/choice.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/result.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/right-answers.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/webpack.config.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Hi298UNu0W5HxzngL0dVlq3caR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\YanukovichYan\\Desktop\\quiz_ts123\\quiz_ts\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/quiz_ts/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/quiz_ts/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b193fa7b-bbae-4ed4-85d3-c08cb4f67ae8" name="Changes" comment="" />
+      <created>1668753429148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668753429148</updated>
+      <workItem from="1668753430834" duration="24000" />
+      <workItem from="1668753491561" duration="1411000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
