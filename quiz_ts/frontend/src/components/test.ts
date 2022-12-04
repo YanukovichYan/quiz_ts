@@ -1,35 +1,57 @@
-import {UrlManager} from "../utils/url-manager.ts";
-import {CustomHttp} from "../services/custom-http.ts";
+import {UrlManager} from "../utils/url-manager";
+import {CustomHttp} from "../services/custom-http";
 import config from "../../config/config";
-import {Auth} from "../services/auth.ts";
+import {Auth} from "../services/auth";
+import {QueryParamsType} from "../types/query-params.type";
+import {QuizAnswersType, QuizQuestionType, QuizType} from "../types/quiz.type";
+import {DefaultResponseType} from "../types/default-response.type";
+import {UserResultType} from "../types/user-result.type";
+import {ActionTestType} from "../types/action-test.type";
+import {UserInfoType} from "../types/user-info.type";
+import {PassTestResponseType} from "../types/pass-test-response.type";
 
 export class Test {
+
+    private progressBarElement: HTMLElement | null
+    private passButtonElement: HTMLElement | null
+    private nextButtonElement: HTMLElement | null
+    private prevButtonElement: HTMLElement | null
+    private questionTitleElement: HTMLElement | null
+    private optionsElement: HTMLElement | null
+    private quiz: QuizType | null
+    private currentQuestionIndex: number
+    readonly userResult: UserResultType[]
+    private routeParams: QueryParamsType
+    private interval: number = 0
+
+
     constructor() {
         this.progressBarElement = null;
         this.passButtonElement = null;
         this.nextButtonElement = null;
         this.prevButtonElement = null;
-        this.optionsElement = null;
         this.questionTitleElement = null;
+        this.optionsElement = null;
         this.quiz = null;
         this.currentQuestionIndex = 1;
         this.userResult = [];
-        this.user = {};
+        // this.user = {};
         this.routeParams = UrlManager.getQueryParams()
 
         this.init()
     }
 
-    async init() {
+    private async init(): Promise<void> {
         if (this.routeParams.id) {
 
             try {
-                const result = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}`, 'GET')
+                const result: DefaultResponseType | QuizType = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}`, 'GET')
                 if (result) {
-                    if (result.error) {
-                        throw new Error(result.error)
+                    if ((result as DefaultResponseType).error !== undefined) {
+                        throw new Error((result as DefaultResponseType).message)
                     }
-                    this.quiz = result
+
+                    this.quiz = result as QuizType
                     this.startQuiz()
                 }
             } catch (e) {
@@ -38,23 +60,34 @@ export class Test {
         }
     }
 
-    startQuiz() {
+    private startQuiz(): void {
+        if (!this.quiz) return
+
         this.progressBarElement = document.getElementById('progress-bar')
 
         this.questionTitleElement = document.getElementById('title')
         this.optionsElement = document.getElementById('options')
 
         this.nextButtonElement = document.getElementById('next')
-        this.nextButtonElement.onclick = this.move.bind(this, 'next')
+        if (this.nextButtonElement) {
+            this.nextButtonElement.onclick = this.move.bind(this, ActionTestType.next)
+        }
 
         this.prevButtonElement = document.getElementById('prev')
-        this.prevButtonElement.onclick = this.move.bind(this, 'prev')
+        if (this.prevButtonElement) {
+            this.prevButtonElement.onclick = this.move.bind(this, ActionTestType.prev)
+        }
 
         this.passButtonElement = document.getElementById('pass')
-        this.passButtonElement.onclick = this.move.bind(this, 'pass')
 
+        if (this.passButtonElement) {
+            this.passButtonElement.onclick = this.move.bind(this, ActionTestType.pass)
+        }
 
-        document.getElementById('pre-title').innerText = this.quiz.name
+        const preTitleElement: HTMLElement | null = document.getElementById('pre-title')
+        if (preTitleElement) {
+            preTitleElement.innerText = this.quiz.name
+        }
 
         localStorage.removeItem('chosenAnswers')
         localStorage.removeItem('user')
@@ -62,59 +95,72 @@ export class Test {
         this.prepareProgressBar()
         this.showQuestion()
 
-        const timerElement = document.getElementById('timer')
-        let seconds = 1000
-        this.interval = setInterval(function () {
+        const timerElement: HTMLElement | null = document.getElementById('timer')
+        let seconds: number = 1000
+        const that: Test = this
+        this.interval = window.setInterval(function () {
             seconds--
-            timerElement.innerText = seconds
+            if (timerElement) {
+                timerElement.innerText = seconds.toString()
+            }
             if (seconds === 0) {
-                clearInterval(this.interval)
-                this.complete()
+                clearInterval(that.interval)
+                that.complete()
             }
         }.bind(this), 1000)
     }
 
-    prepareProgressBar() {
-        for (let i = 0; i < this.quiz.questions.length; i++) {
-            const itemElement = document.createElement('div')
-            itemElement.className = 'test-progress-bar-item' + (i === 0 ? ' active' : '')
+    prepareProgressBar(): void {
+        if (this.quiz) {
+            for (let i = 0; i < this.quiz.questions.length; i++) {
+                const itemElement: HTMLElement | null = document.createElement('div')
+                itemElement.className = 'test-progress-bar-item' + (i === 0 ? ' active' : '')
 
-            const itemCircleElement = document.createElement('div')
-            itemCircleElement.className = 'test-progress-bar-item-circle'
+                const itemCircleElement: HTMLElement | null = document.createElement('div')
+                itemCircleElement.className = 'test-progress-bar-item-circle'
 
-            const itemTextElement = document.createElement('div')
-            itemTextElement.className = 'test-progress-bar-item-text'
-            itemTextElement.innerText = 'Вопрос ' + (i + 1)
+                const itemTextElement: HTMLElement | null = document.createElement('div')
+                itemTextElement.className = 'test-progress-bar-item-text'
+                itemTextElement.innerText = 'Вопрос ' + (i + 1)
 
-            itemElement.appendChild(itemCircleElement)
-            itemElement.appendChild(itemTextElement)
+                itemElement.appendChild(itemCircleElement)
+                itemElement.appendChild(itemTextElement)
 
-            this.progressBarElement.appendChild(itemElement)
+                if (this.progressBarElement) {
+                    this.progressBarElement.appendChild(itemElement)
+                }
+            }
         }
     }
 
-    showQuestion() {
-        const that = this
-        const activeQuestion = this.quiz.questions[this.currentQuestionIndex - 1]
+    private showQuestion(): void {
+        if (!this.quiz) return
+        const that: Test = this
+        const activeQuestion: QuizQuestionType = this.quiz.questions[this.currentQuestionIndex - 1]
 
-        const chosenOption = this.userResult.find(item => {
+        if (this.questionTitleElement) {
+            this.questionTitleElement.innerHTML = '<span>Вопрос ' + this.currentQuestionIndex + ':</span> ' + activeQuestion.question
+        }
+
+        if (this.optionsElement) {
+            this.optionsElement.innerHTML = ''
+        }
+
+        const chosenOption: UserResultType | undefined = this.userResult?.find(item => {
             return item.questionId === activeQuestion.id
         })
 
-        this.questionTitleElement.innerHTML = '<span>Вопрос ' + this.currentQuestionIndex + ':</span> ' + activeQuestion.question
-
-        this.optionsElement.innerHTML = ''
-        activeQuestion.answers.forEach(answer => {
-            const optionElement = document.createElement('div')
+        activeQuestion.answers.forEach((answer: QuizAnswersType) => {
+            const optionElement: HTMLElement | null = document.createElement('div')
             optionElement.className = 'test-question-option'
 
-            const inputId = 'answer' + answer.id
-            const inputElement = document.createElement('input')
+            const inputId: string = 'answer' + answer.id
+            const inputElement: HTMLElement | null = document.createElement('input')
             inputElement.className = 'option-answer'
             inputElement.setAttribute('id', inputId)
             inputElement.setAttribute('type', 'radio')
             inputElement.setAttribute('name', 'answer')
-            inputElement.setAttribute('value', answer.id)
+            inputElement.setAttribute('value', answer.id.toString())
             if (chosenOption && chosenOption.chosenAnswerId === answer.id) {
                 inputElement.setAttribute('checked', 'checked')
             }
@@ -123,65 +169,75 @@ export class Test {
                 that.chooseAnswer()
             }
 
-            const labelElement = document.createElement('label')
+            const labelElement: HTMLElement | null = document.createElement('label')
             labelElement.setAttribute('for', inputId)
             labelElement.innerText = answer.answer
 
             optionElement.appendChild(inputElement)
             optionElement.appendChild(labelElement)
 
-            this.optionsElement.appendChild(optionElement)
+            if (this.optionsElement) {
+                this.optionsElement.appendChild(optionElement)
+            }
         })
-        if (chosenOption && chosenOption.chosenAnswerId) {
-            this.nextButtonElement.removeAttribute('disabled')
-            this.passButtonElement.setAttribute('disabled', 'disabled')
-        } else {
-            this.nextButtonElement.setAttribute('disabled', 'disabled')
-            this.passButtonElement.removeAttribute('disabled', 'disabled')
+
+        if (this.nextButtonElement && this.passButtonElement) {
+            if (chosenOption && chosenOption.chosenAnswerId) {
+                this.nextButtonElement.removeAttribute('disabled')
+                this.passButtonElement.setAttribute('disabled', 'disabled')
+            } else {
+                this.nextButtonElement.setAttribute('disabled', 'disabled')
+                this.passButtonElement.removeAttribute('disabled')
+            }
+            if (this.currentQuestionIndex === this.quiz.questions.length) {
+                this.nextButtonElement.innerText = 'Завершить'
+            } else {
+                this.nextButtonElement.innerText = 'Дальше'
+            }
         }
-        if (this.currentQuestionIndex === this.quiz.questions.length) {
-            this.nextButtonElement.innerText = 'Завершить'
-        } else {
-            this.nextButtonElement.innerText = 'Дальше'
-        }
-        if (this.currentQuestionIndex > 1) {
-            this.prevButtonElement.removeAttribute('disabled')
-        } else {
-            this.prevButtonElement.setAttribute('disabled', 'disabled')
+        if (this.prevButtonElement) {
+            if (this.currentQuestionIndex > 1) {
+                this.prevButtonElement.removeAttribute('disabled')
+            } else {
+                this.prevButtonElement.setAttribute('disabled', 'disabled')
+            }
         }
     }
 
-    chooseAnswer() {
-        this.nextButtonElement.removeAttribute('disabled')
-        this.passButtonElement.setAttribute('disabled', 'disabled')
+    private chooseAnswer(): void {
+        if (this.nextButtonElement) this.nextButtonElement.removeAttribute('disabled')
+        if (this.passButtonElement) this.passButtonElement.setAttribute('disabled', 'disabled')
     }
 
-    move(action) {
-        const activeQuestion = this.quiz.questions[this.currentQuestionIndex - 1]
+    private move(action: ActionTestType): void {
+        if (!this.quiz) return;
+        const activeQuestion: QuizQuestionType = this.quiz.questions[this.currentQuestionIndex - 1];
 
-        const chosenAnswer = Array.from(document.getElementsByClassName('option-answer')).find(element => {
-            return element.checked
-        })
+        const chosenAnswer: HTMLInputElement | undefined = Array.from(document.getElementsByClassName('option-answer')).find(element => {
+            return (element as HTMLInputElement).checked
+        }) as HTMLInputElement;
 
-        let chosenAnswerId = null
+        let chosenAnswerId: number | null = null
         if (chosenAnswer && chosenAnswer.value) {
             chosenAnswerId = Number(chosenAnswer.value)
         }
 
-        const existingResult = this.userResult.find(item => {
+        const existingResult: UserResultType | undefined = this.userResult.find(item => {
             return item.questionId === activeQuestion.id
         })
 
-        if (existingResult) {
-            existingResult.chosenAnswerId = chosenAnswerId
-        } else {
-            this.userResult.push({
-                questionId: activeQuestion.id,
-                chosenAnswerId: chosenAnswerId,
-            })
+        if (chosenAnswerId) {
+            if (existingResult) {
+                existingResult.chosenAnswerId = chosenAnswerId
+            } else {
+                this.userResult.push({
+                    questionId: activeQuestion.id,
+                    chosenAnswerId: chosenAnswerId,
+                })
+            }
         }
 
-        if (action === "next" || action === "pass") {
+        if (action === ActionTestType.next || ActionTestType.pass) {
             this.currentQuestionIndex++
         } else {
             this.currentQuestionIndex--
@@ -193,33 +249,40 @@ export class Test {
             return
         }
 
-        Array.from(this.progressBarElement.children).forEach((item, index) => {
-            const currentItemIndex = index + 1
-            item.classList.remove('complete')
-            item.classList.remove('active')
-            if (currentItemIndex === this.currentQuestionIndex) {
-                item.classList.add('active')
-            } else if (currentItemIndex < this.currentQuestionIndex) {
-                item.classList.add('complete')
-            }
-        })
+        if (this.progressBarElement) {
+            Array.from(this.progressBarElement.children).forEach((item: Element, index: number) => {
+                const currentItemIndex: number = index + 1
+                item.classList.remove('complete')
+                item.classList.remove('active')
+                if (currentItemIndex === this.currentQuestionIndex) {
+                    item.classList.add('active')
+                } else if (currentItemIndex < this.currentQuestionIndex) {
+                    item.classList.add('complete')
+                }
+            })
+        }
+
         this.showQuestion()
     }
 
-    async complete() {
-        const userInfo = Auth.getUserInfo()
-        if (!userInfo) location.href = '#/'
+    private async complete(): Promise<void> {
+        const userInfo: UserInfoType | null = Auth.getUserInfo()
+        if (!userInfo) {
+            location.href = '#/'
+            return
+        }
 
         try {
-            const result = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}/pass`, 'POST', {
+            const result: DefaultResponseType | PassTestResponseType = await CustomHttp.request(`${config.host}/tests/${this.routeParams.id}/pass`, 'POST', {
                 userId: userInfo.userId,
                 results: this.userResult
             })
 
             if (result) {
-                if (result.error) {
-                    throw new Error(result.error)
+                if ((result as DefaultResponseType).error !== undefined) {
+                    throw new Error((result as DefaultResponseType).message)
                 }
+
                 location.href = '#/result?id=' + this.routeParams.id
             }
         } catch (e) {

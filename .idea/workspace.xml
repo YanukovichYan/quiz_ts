@@ -4,47 +4,150 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c44dcef-806f-4eec-a1d4-a025baef125c" name="Changes" comment="" />
+    <list default="true" id="605f07ad-7c9f-436b-92d2-249d4f2c09af" name="Changes" comment="merge into master">
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/action-test.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/default-response.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/form-field.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/login-response.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/pass-test-response.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/quiz-list.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/quiz.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/signup-response.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/test-result.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/types/user-result.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/components/choice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/components/choice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/components/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/components/form.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/components/result.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/components/result.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/components/right-answers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/components/right-answers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/components/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/components/test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_ts/frontend/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_ts/frontend/src/router.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2I8PSDOtX0U8KHNLIICkPeis7tX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "ts.external.directory.path": "C:\\Users\\Ян\\Desktop\\Проекты\\Продвинутый фронтенд\\Проект Quiz на TS\\quiz_ts\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ян/Desktop/Проекты/Продвинутый фронтенд/Проект Quiz на TS/quiz_ts/frontend/src/types&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Ян\\Desktop\\Проекты\\Продвинутый фронтенд\\Проект Quiz на TS\\quiz_ts\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Ян\Desktop\Проекты\Продвинутый фронтенд\Проект Quiz на TS\quiz_ts\frontend\src\types" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/quiz_ts/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/quiz_ts/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3c44dcef-806f-4eec-a1d4-a025baef125c" name="Changes" comment="" />
+      <changelist id="605f07ad-7c9f-436b-92d2-249d4f2c09af" name="Changes" comment="merge into master" />
       <created>1669560240577</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669560240577</updated>
       <workItem from="1669560243178" duration="3679000" />
+      <workItem from="1670051214764" duration="6090000" />
+      <workItem from="1670136400994" duration="3911000" />
     </task>
+    <task id="LOCAL-00001" summary="merge into master">
+      <created>1669577935174</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669577935174</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merge into master" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge into master" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/quiz_ts/frontend/src/services/auth.ts</url>
+          <line>38</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

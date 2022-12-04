@@ -1,67 +1,71 @@
 import {CustomHttp} from "../services/custom-http";
 import config from "../../config/config";
 import {Auth} from "../services/auth";
+import {QuizListType} from "../types/quiz-list.type";
+import {TestResultType} from "../types/test-result.type";
+import {UrlManager} from "../utils/url-manager";
+import {QueryParamsType} from "../types/query-params.type";
+import {UserInfoType} from "../types/user-info.type";
+import {DefaultResponseType} from "../types/default-response.type";
 
 export class Choice {
-    constructor() {
-        this.quizzes = [];
-        this.testResults = null
+    private quizzes: QuizListType[] = []
+    private testResults: TestResultType[] | null = null
+    private routeParams: QueryParamsType
 
+    constructor() {
+        this.routeParams = UrlManager.getQueryParams()
         this.init()
     }
 
-    async init() {
+    private async init(): Promise<void> {
         try {
-            const result = await CustomHttp.request(`${config.host}/tests`, 'GET')
-            if (result) {
-                if (result.error) {
-                    throw new Error(result.error)
-                }
-                this.quizzes = result
-            }
+            this.quizzes = await CustomHttp.request(`${config.host}/tests`, 'GET')
         } catch (e) {
-            return console.log(e)
+            console.log(e)
+            return
         }
 
-        const userInfo = Auth.getUserInfo()
+        const userInfo: UserInfoType | null = Auth.getUserInfo()
         if (userInfo) {
             try {
-                const results = await CustomHttp.request(`${config.host}/tests/results?userId=${userInfo.userId}`, 'GET')
-                if (results) {
-                    if (results.error) {
-                        throw new Error(results.error)
+                const result: TestResultType | DefaultResponseType = await CustomHttp.request(`${config.host}/tests/results?userId=${userInfo.userId}`, 'GET')
+                if (result) {
+                    if ((result as DefaultResponseType).error !== undefined) {
+                        throw new Error((result as DefaultResponseType).message)
                     }
-                    this.testResults = results
+                    this.testResults = result as unknown as TestResultType[]
                 }
             } catch (e) {
-                return console.log(e)
+                console.log(e)
+                return
             }
         }
         this.processQuizzes()
     }
 
-    processQuizzes() {
-        const choiceOptionsElement = document.getElementById('choice-options')
+    private processQuizzes(): void {
+        const choiceOptionsElement: HTMLElement | null = document.getElementById('choice-options')
 
-        if (this.quizzes && this.quizzes.length > 0) {
-            this.quizzes.forEach(quiz => {
-                const that = this
+        if (this.quizzes && this.quizzes.length > 0 && choiceOptionsElement) {
+            this.quizzes.forEach((quiz: QuizListType) => {
+                const that: Choice = this
 
-                const choiceOptionElement = document.createElement('div')
+                const choiceOptionElement: HTMLElement | null = document.createElement('div')
                 choiceOptionElement.className = 'choice-option'
-                choiceOptionElement.setAttribute('data-id', quiz.id)
+                choiceOptionElement.setAttribute('data-id', String(quiz.id))
                 choiceOptionElement.onclick = function () {
-                    that.chooseQuiz(this)
+                    that.chooseQuiz(<HTMLElement>this)
                 }
 
-                const choiceOptionTextElement = document.createElement('div')
+                const choiceOptionTextElement: HTMLElement | null = document.createElement('div')
                 choiceOptionTextElement.className = 'choice-option-text'
                 choiceOptionTextElement.innerText = quiz.name
 
-                const choiceOptionArrowElement = document.createElement('div')
+                const choiceOptionArrowElement: HTMLElement | null = document.createElement('div')
                 choiceOptionArrowElement.className = 'choice-option-arrow'
 
-                const choiceOptionImageElement = document.createElement('img')
+                const choiceOptionImageElement: HTMLElement | null = document.createElement('img')
                 choiceOptionImageElement.setAttribute('src', '/images/arrow.png')
                 choiceOptionImageElement.setAttribute('alt', 'arrow')
 
@@ -73,14 +77,14 @@ export class Choice {
                 if (this.testResults) {
                     this.testResults.forEach(backResults => {
                         if (backResults.testId === quiz.id) {
-                            const choiceOptionsResultTest = document.createElement('div')
+                            const choiceOptionsResultTest: HTMLElement | null = document.createElement('div')
                             choiceOptionsResultTest.className = 'choice-options-result-test'
 
-                            const choiceOptionsResultTestText = document.createElement('div')
+                            const choiceOptionsResultTestText: HTMLElement | null = document.createElement('div')
                             choiceOptionsResultTestText.className = 'choice-options-result-test-text'
                             choiceOptionsResultTestText.innerText = 'Результат'
 
-                            const choiceOptionsResultTestScore = document.createElement('div')
+                            const choiceOptionsResultTestScore: HTMLElement | null = document.createElement('div')
                             choiceOptionsResultTestScore.className = 'choice-options-result-test-text'
                             choiceOptionsResultTestScore.innerText = `${backResults.score}/${backResults.total}`
 
@@ -94,8 +98,8 @@ export class Choice {
         }
     }
 
-    chooseQuiz(element) {
-        const dataId = element.getAttribute('data-id')
+    private chooseQuiz(element: HTMLElement): void {
+        const dataId: string | null = element.getAttribute('data-id')
         if (dataId) {
             location.href = '#/test?id=' + dataId
         }

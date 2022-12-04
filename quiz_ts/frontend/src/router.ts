@@ -3,7 +3,7 @@ import {Choice} from "./components/choice";
 import {Test} from "./components/test";
 import {Result} from "./components/result";
 import {Auth} from "./services/auth";
-import {RightAnswers} from "./components/right-answers"
+// import {RightAnswers} from "./components/right-answers"
 import {RouteType} from "./types/route.type";
 import {UserInfoType} from "./types/user-info.type";
 
@@ -78,15 +78,15 @@ export class Router {
                     new Result();
                 }
             },
-            {
-                route: '#/right',
-                title: 'Результат прохождения теста',
-                template: 'templates/right-answers.html',
-                styles: 'styles/right-answers.css',
-                load: () => {
-                    new RightAnswers();
-                }
-            },
+            // {
+            //     route: '#/right',
+            //     title: 'Результат прохождения теста',
+            //     template: 'templates/right-answers.html',
+            //     styles: 'styles/right-answers.css',
+            //     load: () => {
+            //         new RightAnswers();
+            //     }
+            // },
         ]
     }
 
